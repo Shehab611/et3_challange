@@ -1,14 +1,17 @@
 import os
+import argparse
 
 # Define file extensions for each category
 imagesExtensions = ["jpg", "jpeg", "png", "gif", "bmp", "tiff", "svg", "webp"]
 videoExtensions = ["mp4", "mkv", "mov", "avi", "flv", "wmv"]
 docsExtensions = ["pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt"]
 
+
 def get_file_extension(file_path):
     # Extract and return the file extension in lowercase without the dot
     _, ext = os.path.splitext(file_path)
     return ext.lower().replace(".", "")
+
 
 def get_category_name(file_path):
     # Determine the category of the file based on its extension
@@ -21,6 +24,7 @@ def get_category_name(file_path):
         return "documents"
     else:
         return "others"
+
 
 def organize_files(source_dir, target_dir, simulate=False):
     # Create the target directory if it doesn't exist and not simulating
@@ -53,6 +57,7 @@ def organize_files(source_dir, target_dir, simulate=False):
 
     return category_count
 
+
 def category_summary(category_count, simulate=False):
     # Print a summary of the organized files
     if simulate:
@@ -74,26 +79,27 @@ def category_summary(category_count, simulate=False):
     else:
         print("Files organized successfully.")
 
-def main():
-    # Get source and target directories from user input
-    source_dir = input("Enter the source directory: ")
-    target_dir = input("Enter the target directory: ")
 
-    if not os.path.exists(source_dir):
+def main():
+    parser = argparse.ArgumentParser(description="Organize files in a directory by category.")
+    parser.add_argument("source_dir", help="Source directory containing files to organize")
+    parser.add_argument("target_dir", help="Target directory to move organized files into")
+    parser.add_argument("--simulate", action="store_true", help="Simulate the operation without moving files")
+    args = parser.parse_args()
+
+    if not os.path.exists(args.source_dir):
         print("Source directory does not exist.")
         return
 
-    if not os.path.exists(target_dir):
+    if not os.path.exists(args.target_dir):
         print("Target directory does not exist. Creating it.")
-        os.makedirs(target_dir)
+        os.makedirs(args.target_dir)
     else:
         print("Target directory already exists.")
 
-    # Ask user if they want to simulate the operation
-    simulate = input("Would you like to simulate? (y/n): ")
-    simulate = simulate.lower() == 'y'
-    category_count = organize_files(source_dir, target_dir, simulate=simulate)
-    category_summary(category_count, simulate=simulate)
+    category_count = organize_files(args.source_dir, args.target_dir, simulate=args.simulate)
+    category_summary(category_count, simulate=args.simulate)
+
 
 if __name__ == "__main__":
     main()
