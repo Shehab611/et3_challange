@@ -18,5 +18,8 @@ help users organize their files by moving them into appropriate directories base
 ```bash
      python file_organizer.py "path/to/your/source/directory" "path/to/your/destination/directory"
         # The script will move files from the source directory to the destination directory based on their file types.
+```
+```bash
     python file_organizer.py "path/to/your/source/directory" "path/to/your/destination/directory" --simulate
         # The script will display the actions it would take without actually moving any files.
+```
