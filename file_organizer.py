@@ -40,3 +40,14 @@ def organize_files(source_dir, target_dir):
                 os.rename(file_path, target_file_path)
             else:
                 print(f"File {target_file_path} already exists. Skipping.")
+
+
+def main():
+    source_dir = input("Enter the source directory: ")
+    target_dir = input("Enter the target directory: ")
+    organize_files(source_dir, target_dir)
+
+
+if __name__ == "__main__":
+    main()
+    print("Files organized successfully.")
