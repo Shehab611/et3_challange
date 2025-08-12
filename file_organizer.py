@@ -7,7 +7,7 @@ docsExtensions = ["pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt"]
 
 def get_file_extension(file_path):
     _, ext = os.path.splitext(file_path)
-    return ext.lower()
+    return ext.lower().replace(".", "")
 
 
 def get_category_name(file_path):
