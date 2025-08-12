@@ -20,3 +20,23 @@ def get_category_name(file_path):
         return "documents"
     else:
         return "others"
+
+
+def organize_files(source_dir, target_dir):
+    if not os.path.exists(target_dir):
+        os.makedirs(target_dir)
+
+    for root, _, files in os.walk(source_dir):
+        for file in files:
+            file_path = os.path.join(root, file)
+            category = get_category_name(file_path)
+            category_dir = os.path.join(target_dir, category)
+
+            if not os.path.exists(category_dir):
+                os.makedirs(category_dir)
+
+            target_file_path = os.path.join(category_dir, file)
+            if not os.path.exists(target_file_path):
+                os.rename(file_path, target_file_path)
+            else:
+                print(f"File {target_file_path} already exists. Skipping.")
