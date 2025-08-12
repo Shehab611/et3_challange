@@ -15,11 +15,13 @@ help users organize their files by moving them into appropriate directories base
 3. Open a terminal and navigate to the project directory.
 4. type the following command to run the script:
 
-```bash
+    ### The script will move files from the source directory to the destination directory based on their file types.
+    ```bash
      python file_organizer.py "path/to/your/source/directory" "path/to/your/destination/directory"
-        # The script will move files from the source directory to the destination directory based on their file types.
-```
-```bash
+    ```
+
+    ### The script will display the actions it would take without actually moving any files.
+    ```bash
     python file_organizer.py "path/to/your/source/directory" "path/to/your/destination/directory" --simulate
-        # The script will display the actions it would take without actually moving any files.
-```
+    ```
+5. Replace `"path/to/your/source/directory"` with the path to the directory containing the files you want to organize, and `"path/to/your/destination/directory"` with the path where you want the organized files to be moved.
