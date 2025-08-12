@@ -1,16 +1,17 @@
 import os
 
-imagesExtensions = ["jpg", "jpeg", "png", "gif", "bmp", "tiff", "svg", "webp", ]
+# Define file extensions for each category
+imagesExtensions = ["jpg", "jpeg", "png", "gif", "bmp", "tiff", "svg", "webp"]
 videoExtensions = ["mp4", "mkv", "mov", "avi", "flv", "wmv"]
 docsExtensions = ["pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt"]
 
-
 def get_file_extension(file_path):
+    # Extract and return the file extension in lowercase without the dot
     _, ext = os.path.splitext(file_path)
     return ext.lower().replace(".", "")
 
-
 def get_category_name(file_path):
+    # Determine the category of the file based on its extension
     ext = get_file_extension(file_path)
     if ext in imagesExtensions:
         return "images"
@@ -21,19 +22,21 @@ def get_category_name(file_path):
     else:
         return "others"
 
-
 def organize_files(source_dir, target_dir, simulate=False):
+    # Create the target directory if it doesn't exist and not simulating
     if not os.path.exists(target_dir) and not simulate:
         os.makedirs(target_dir)
 
     category_count = {}
 
+    # Walk through all files in the source directory
     for root, _, files in os.walk(source_dir):
         for file in files:
             file_path = os.path.join(root, file)
             category = get_category_name(file_path)
             category_dir = os.path.join(target_dir, category)
 
+            # Create category directory if it doesn't exist and not simulating
             if not os.path.exists(category_dir) and not simulate:
                 os.makedirs(category_dir)
 
@@ -43,14 +46,15 @@ def organize_files(source_dir, target_dir, simulate=False):
                     print(f"[SIMULATE] Would move {file_path} to {target_file_path}")
                 else:
                     os.rename(file_path, target_file_path)
+                # Increment the count for the category
                 category_count[category] = category_count.get(category, 0) + 1
             else:
                 print(f"File {target_file_path} already exists. Skipping.")
 
     return category_count
 
-
 def category_summary(category_count, simulate=False):
+    # Print a summary of the organized files
     if simulate:
         print("[SIMULATE] Summary of organized files:")
         print("[SIMULATE] This is a simulation. No files were actually moved.")
@@ -70,8 +74,8 @@ def category_summary(category_count, simulate=False):
     else:
         print("Files organized successfully.")
 
-
 def main():
+    # Get source and target directories from user input
     source_dir = input("Enter the source directory: ")
     target_dir = input("Enter the target directory: ")
 
@@ -85,11 +89,11 @@ def main():
     else:
         print("Target directory already exists.")
 
+    # Ask user if they want to simulate the operation
     simulate = input("Would you like to simulate? (y/n): ")
     simulate = simulate.lower() == 'y'
     category_count = organize_files(source_dir, target_dir, simulate=simulate)
     category_summary(category_count, simulate=simulate)
-
 
 if __name__ == "__main__":
     main()
